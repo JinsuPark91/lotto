@@ -9,12 +9,7 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>오대장님을 위한 로또 번호 생성기</h1>
       </div>
       <h1>Vite + React</h1>
       <div className="card">

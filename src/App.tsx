@@ -3,7 +3,6 @@ import './App.css'
 import { data } from './data'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [numbers, setNumbers] = useState([])
   const [total, setTotal] = useState(0);
   function getRandomInt(min: number, max: number) {
@@ -26,19 +25,20 @@ function App() {
 
   const testFunc = () => {
     const arr: any = [];
-    let total = 0;
+    let total1 = 0;
     Object.keys(data).forEach((key) => {
       const num: number = data[key];
-      arr.push([key, total, total + num - 1]);
-      total += num;
+      arr.push([key, total1, total1 + num - 1]);
+      total1 += num;
     })
-    setTotal(total);
+    setTotal(total1);
 
 
     const result = getRandomInt(0, total);
     // for (let i = 0; i <)
 
-
+    const tt=  total;
+    console.log(tt);
     let num;
     for (let i = 0; i < arr.length; i++) {
       if (arr[i][2] > result) {

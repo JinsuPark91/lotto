@@ -13,9 +13,9 @@ function App() {
   }
 
   useEffect(() => {
-    const arr: [string, number] | [] = [];
+    const arr: any = [];
     let total = 0;
-    Object.keys(data).forEach((key) => {
+    Object.keys(data).forEach((key: string) => {
       const num: number = data[key];
       arr.push([key, total, total + num - 1]);
       total += num;
@@ -25,7 +25,7 @@ function App() {
 
 
   const testFunc = () => {
-    const arr: [string, number] | [] = [];
+    const arr: any = [];
     let total = 0;
     Object.keys(data).forEach((key) => {
       const num: number = data[key];

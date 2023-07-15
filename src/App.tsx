@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import { data } from './data'
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import "./App.css";
+import { data } from "./data";
 
 function App() {
-  const [numbers, setNumbers] = useState([])
+  const [numbers, setNumbers] = useState([]);
   const [total, setTotal] = useState(0);
+  const [calArray, setCalArray] = useState([]);
+
+  // 정해진 구간 안의 랜덤숫자 뽑기
   function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -12,70 +16,80 @@ function App() {
   }
 
   useEffect(() => {
+    // 숫자별 영역 만들기
     const arr: any = [];
     let total = 0;
     Object.keys(data).forEach((key: string) => {
       const num: number = data[key];
       arr.push([key, total, total + num - 1]);
       total += num;
-    })
+    });
     setTotal(total);
-  }, [])
+    setCalArray(arr);
+  }, []);
 
-
-  const testFunc = () => {
-    const arr: any = [];
-    let total1 = 0;
-    Object.keys(data).forEach((key) => {
-      const num: number = data[key];
-      arr.push([key, total1, total1 + num - 1]);
-      total1 += num;
-    })
-    setTotal(total1);
-
-
-    const result = getRandomInt(0, total);
-    // for (let i = 0; i <)
-
-    const tt=  total;
-    console.log(tt);
-    let num;
+  const getNumberFromCalulatedArray = (number: number) => {
+    const arr = calArray;
+    let num = 0;
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i][2] > result) {
+      if (arr[i][2] > number) {
         num = i + 1;
         break;
       }
     }
-    const newNumbers = [...numbers, num];
+    return num;
+  };
+
+  const clickForGettingNumber = () => {
+    let newNumber = getLottoNumber();
+    const newNumbers = [...numbers];
+    newNumbers.push(newNumber);
     setNumbers(newNumbers);
+  };
 
-  }
-
+  const getLottoNumber = () => {
+    if (numbers.length > 5) return;
+    let randomNum = getRandomInt(0, total);
+    const newNumber = getNumberFromCalulatedArray(randomNum);
+    console.log(newNumber);
+    return newNumber;
+  };
 
   return (
     <>
       <div>
         <h1>오대장님을 위한 로또 번호 생성기</h1>
       </div>
-      <div style={{ 'display': 'flex', 'justifyContent': 'space-between' }}>
-        <div style={{ 'borderRadius': '50%', 'background': 'red', 'width': '50px', 'height': '50px', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center', 'color': '#fff' }}>{numbers[0]}</div>
-        <p>{numbers[1]}</p>
-        <p>{numbers[2]}</p>
-        <p>{numbers[3]}</p>
-        <p>{numbers[4]}</p>
-        <p>{numbers[5]}</p>
-      </div>
+      <BallContainer>
+        <NumberBall>{numbers[0]}</NumberBall>
+        <NumberBall>{numbers[1]}</NumberBall>
+        <NumberBall>{numbers[2]}</NumberBall>
+        <NumberBall>{numbers[3]}</NumberBall>
+        <NumberBall>{numbers[4]}</NumberBall>
+        <NumberBall>{numbers[5]}</NumberBall>
+      </BallContainer>
       <div className="card">
-        <button onClick={testFunc}>
-          하나씩 뽑기
-        </button>
-        <button onClick={testFunc}>
-          한번에 다 뽑기
-        </button>
-
+        <button onClick={clickForGettingNumber}>하나씩 뽑기</button>
+        {/* <button onClick={getLottoNumbers}>한번에 다 뽑기</button> */}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
+
+const BallContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NumberBall = styled.div`
+  border-radius: 50%;
+  background: red;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+`;

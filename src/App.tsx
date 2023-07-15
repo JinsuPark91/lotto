@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import "./App.css";
-import { data } from "./data";
+import { data, colorSet } from "./data";
 
 function App() {
   const [numbers, setNumbers] = useState([]);
@@ -71,14 +71,14 @@ function App() {
         <h1>오대장님을 위한 로또 번호 생성기</h1>
       </div>
       <BallContainer>
-        <NumberBall>{numbers[0]}</NumberBall>
-        <NumberBall>{numbers[1]}</NumberBall>
-        <NumberBall>{numbers[2]}</NumberBall>
-        <NumberBall>{numbers[3]}</NumberBall>
-        <NumberBall>{numbers[4]}</NumberBall>
-        <NumberBall>{numbers[5]}</NumberBall>
+        <NumberBall className={numbers[0]}>{numbers[0]}</NumberBall>
+        <NumberBall className={numbers[1]}>{numbers[1]}</NumberBall>
+        <NumberBall className={numbers[2]}>{numbers[2]}</NumberBall>
+        <NumberBall className={numbers[3]}>{numbers[3]}</NumberBall>
+        <NumberBall className={numbers[4]}>{numbers[4]}</NumberBall>
+        <NumberBall className={numbers[5]}>{numbers[5]}</NumberBall>
         <PlusText> + </PlusText>
-        <NumberBall>{numbers[6]}</NumberBall>
+        <NumberBall className={numbers[6]}>{numbers[6]}</NumberBall>
       </BallContainer>
       <div className="card">
         <button onClick={clickForGettingNumber}>하나씩 뽑기</button>
@@ -90,7 +90,7 @@ function App() {
 }
 
 export default App;
-
+const red = "red";
 const BallContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -98,7 +98,7 @@ const BallContainer = styled.div`
 
 const NumberBall = styled.div`
   border-radius: 50%;
-  background: red;
+  background: ${(props) => colorSet[props.className] || "white"};
   font-size: 24px;
   width: 50px;
   height: 50px;
@@ -106,6 +106,7 @@ const NumberBall = styled.div`
   align-items: center;
   justify-content: center;
   color: #fff;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 `;
 
 const PlusText = styled.span`

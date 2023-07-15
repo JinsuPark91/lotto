@@ -49,9 +49,15 @@ function App() {
 
   const getLottoNumber = () => {
     if (numbers.length > 6) return;
-    let randomNum = getRandomInt(0, total);
-    const newNumber = getNumberFromCalulatedArray(randomNum);
-    console.log(newNumber);
+    let isDuplicated = true;
+    let newNumber = 0;
+    while (isDuplicated) {
+      let randomNum = getRandomInt(0, total);
+      newNumber = getNumberFromCalulatedArray(randomNum);
+
+      if (!numbers.length || numbers.indexOf(newNumber) < 0)
+        isDuplicated = false;
+    }
     return newNumber;
   };
 
@@ -93,9 +99,9 @@ const BallContainer = styled.div`
 const NumberBall = styled.div`
   border-radius: 50%;
   background: red;
-  font-size: 26px;
-  width: 60px;
-  height: 60px;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

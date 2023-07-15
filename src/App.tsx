@@ -90,7 +90,6 @@ function App() {
 }
 
 export default App;
-const red = "red";
 const BallContainer = styled.div`
   display: flex;
   justify-content: space-between;

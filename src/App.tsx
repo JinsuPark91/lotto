@@ -90,8 +90,9 @@ const BallContainer = styled.div`
 const NumberBall = styled.div`
   border-radius: 50%;
   background: red;
-  width: 50px;
-  height: 50px;
+  font-size: 30px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;

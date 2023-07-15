@@ -40,6 +40,7 @@ function App() {
   };
 
   const clickForGettingNumber = () => {
+    if (numbers.length > 6) return;
     let newNumber = getLottoNumber();
     const newNumbers = [...numbers];
     newNumbers.push(newNumber);
@@ -47,7 +48,7 @@ function App() {
   };
 
   const getLottoNumber = () => {
-    if (numbers.length > 5) return;
+    if (numbers.length > 6) return;
     let randomNum = getRandomInt(0, total);
     const newNumber = getNumberFromCalulatedArray(randomNum);
     console.log(newNumber);
@@ -70,6 +71,8 @@ function App() {
         <NumberBall>{numbers[3]}</NumberBall>
         <NumberBall>{numbers[4]}</NumberBall>
         <NumberBall>{numbers[5]}</NumberBall>
+        <PlusText> + </PlusText>
+        <NumberBall>{numbers[6]}</NumberBall>
       </BallContainer>
       <div className="card">
         <button onClick={clickForGettingNumber}>하나씩 뽑기</button>
@@ -90,11 +93,17 @@ const BallContainer = styled.div`
 const NumberBall = styled.div`
   border-radius: 50%;
   background: red;
-  font-size: 30px;
-  width: 80px;
-  height: 80px;
+  font-size: 26px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
+`;
+
+const PlusText = styled.span`
+  font-size: 26px;
+  display: flex;
+  align-items: center;
 `;

@@ -8,13 +8,6 @@ function App() {
   const [total, setTotal] = useState(0);
   const [calArray, setCalArray] = useState([]);
 
-  // 정해진 구간 안의 랜덤숫자 뽑기
-  function getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-  }
-
   useEffect(() => {
     // 숫자별 영역 만들기
     const arr: any = [];
@@ -27,6 +20,12 @@ function App() {
     setTotal(total);
     setCalArray(arr);
   }, []);
+
+  const getRandomInt = (min: number, max: number) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  };
 
   const getNumberFromCalulatedArray = (number: number) => {
     const arr = calArray;
@@ -55,6 +54,10 @@ function App() {
     return newNumber;
   };
 
+  const clickForDelete = () => {
+    setNumbers([]);
+  };
+
   return (
     <>
       <div>
@@ -71,6 +74,7 @@ function App() {
       <div className="card">
         <button onClick={clickForGettingNumber}>하나씩 뽑기</button>
         {/* <button onClick={getLottoNumbers}>한번에 다 뽑기</button> */}
+        <button onClick={clickForDelete}>지우기</button>
       </div>
     </>
   );

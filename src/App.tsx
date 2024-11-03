@@ -39,13 +39,13 @@ function App() {
     return num;
   };
 
-  const clickForGettingNumber = () => {
-    if (numbers.length > 6) return;
-    let newNumber = getLottoNumber();
-    const newNumbers = [...numbers];
-    newNumbers.push(newNumber);
-    setNumbers(newNumbers);
-  };
+  // const clickForGettingNumber = () => {
+  //   if (numbers.length > 6) return;
+  //   let newNumber = getLottoNumber();
+  //   const newNumbers = [...numbers];
+  //   newNumbers.push(newNumber);
+  //   setNumbers(newNumbers);
+  // };
 
   const getLottoNumber = () => {
     if (numbers.length > 6) return;
@@ -65,6 +65,16 @@ function App() {
     setNumbers([]);
   };
 
+  const getLottoNumbers =()=>{
+    const numArr = [];
+    for(let i =0; i<7; i++){
+      numArr.push(getLottoNumber())
+    }
+    setNumbers(numArr);
+
+  }
+
+
   return (
     <>
       <div>
@@ -81,8 +91,8 @@ function App() {
         <NumberBall className={numbers[6]}>{numbers[6]}</NumberBall>
       </BallContainer>
       <div className="card">
-        <button onClick={clickForGettingNumber}>하나씩 뽑기</button>
-        {/* <button onClick={getLottoNumbers}>한번에 다 뽑기</button> */}
+        {/* <button onClick={clickForGettingNumber}>하나씩 뽑기</button> */}
+        <button onClick={getLottoNumbers}>한번에 다 뽑기</button>
         <button onClick={clickForDelete}>지우기</button>
       </div>
     </>

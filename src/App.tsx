@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import numbers from './store';
 import styled from "styled-components";
 import "./App.css";
-import { atom, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { data, colorSet } from "./data";
 
 function App() {

@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
+import numbers from './store';
 import styled from "styled-components";
 import "./App.css";
+import { atom, useRecoilState } from 'recoil';
 import { data, colorSet } from "./data";
 
 function App() {
-  const [numbers, setNumbers] = useState([]);
   const [total, setTotal] = useState(0);
   const [calArray, setCalArray] = useState([]);
+  const [popText, setPopText] = useState('한번에 다뽑기');
+
+  const [selectedNumbers, setSelectedNumber] = useRecoilState(numbers);
 
   useEffect(() => {
     // 숫자별 영역 만들기
@@ -20,6 +24,8 @@ function App() {
     setTotal(total);
     setCalArray(arr);
   }, []);
+
+
 
   const getRandomInt = (min: number, max: number) => {
     min = Math.ceil(min);
@@ -47,30 +53,32 @@ function App() {
   //   setNumbers(newNumbers);
   // };
 
-  const getLottoNumber = () => {
-    if (numbers.length > 6) return;
+  const getLottoNumber = (arr: Number[]) => {
+    // if (numbers.length > 6) return;
     let isDuplicated = true;
     let newNumber = 0;
     while (isDuplicated) {
       let randomNum = getRandomInt(0, total);
       newNumber = getNumberFromCalulatedArray(randomNum);
 
-      if (!numbers.length || numbers.indexOf(newNumber) < 0)
+      if (!arr.length || arr.indexOf(newNumber) < 0)
         isDuplicated = false;
     }
     return newNumber;
   };
 
   const clickForDelete = () => {
-    setNumbers([]);
+    setSelectedNumber([]);
   };
 
-  const getLottoNumbers =()=>{
+  const getLottoNumbers = () => {
     const numArr = [];
-    for(let i =0; i<7; i++){
-      numArr.push(getLottoNumber())
+    for (let i = 0; i < 7; i++) {
+      numArr.push(getLottoNumber(numArr))
     }
-    setNumbers(numArr);
+    console.log(numArr);
+    setSelectedNumber(numArr);
+    setPopText('다시 뽑기')
 
   }
 
@@ -78,21 +86,22 @@ function App() {
   return (
     <>
       <div>
-        <h1>오대장님을 위한 로또 번호 생성기</h1>
+        <h1>오대장</h1>
+        <h1> 1등 뽑아 제발</h1>
       </div>
       <BallContainer>
-        <NumberBall className={numbers[0]}>{numbers[0]}</NumberBall>
-        <NumberBall className={numbers[1]}>{numbers[1]}</NumberBall>
-        <NumberBall className={numbers[2]}>{numbers[2]}</NumberBall>
-        <NumberBall className={numbers[3]}>{numbers[3]}</NumberBall>
-        <NumberBall className={numbers[4]}>{numbers[4]}</NumberBall>
-        <NumberBall className={numbers[5]}>{numbers[5]}</NumberBall>
+        <NumberBall className={selectedNumbers[0]}>{selectedNumbers[0]}</NumberBall>
+        <NumberBall className={selectedNumbers[1]}>{selectedNumbers[1]}</NumberBall>
+        <NumberBall className={selectedNumbers[2]}>{selectedNumbers[2]}</NumberBall>
+        <NumberBall className={selectedNumbers[3]}>{selectedNumbers[3]}</NumberBall>
+        <NumberBall className={selectedNumbers[4]}>{selectedNumbers[4]}</NumberBall>
+        <NumberBall className={selectedNumbers[5]}>{selectedNumbers[5]}</NumberBall>
         <PlusText> + </PlusText>
-        <NumberBall className={numbers[6]}>{numbers[6]}</NumberBall>
+        <NumberBall className={selectedNumbers[6]}>{selectedNumbers[6]}</NumberBall>
       </BallContainer>
       <div className="card">
         {/* <button onClick={clickForGettingNumber}>하나씩 뽑기</button> */}
-        <button onClick={getLottoNumbers}>한번에 다 뽑기</button>
+        <button onClick={getLottoNumbers}>{popText}</button>
         <button onClick={clickForDelete}>지우기</button>
       </div>
     </>

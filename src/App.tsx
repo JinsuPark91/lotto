@@ -76,8 +76,7 @@ function App() {
     for (let i = 0; i < 7; i++) {
       numArr.push(getLottoNumber(numArr))
     }
-    const arr = numArr.sort((a, b) => a - b)
-    console.log(numArr);
+    numArr.sort((a, b) => a - b)
     setSelectedNumber(numArr);
     setPopText('다시 뽑기')
 

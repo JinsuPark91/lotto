@@ -136,7 +136,7 @@ export default App;
 const BallContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 10px;
   background: lavender;
 `;
 

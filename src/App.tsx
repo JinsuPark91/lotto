@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import numbers from './store';
+import store from './store';
 import styled from "styled-components";
 import "./App.css";
 import { useRecoilState } from 'recoil';
@@ -10,7 +10,7 @@ function App() {
   const [calArray, setCalArray] = useState([]);
   const [popText, setPopText] = useState('한번에 다뽑기');
 
-  const [selectedNumbers, setSelectedNumber] = useRecoilState(numbers);
+  const [selectedNumbers, setSelectedNumber] = useRecoilState(store.numbers);
 
   useEffect(() => {
     // 숫자별 영역 만들기
@@ -45,16 +45,8 @@ function App() {
     return num;
   };
 
-  // const clickForGettingNumber = () => {
-  //   if (numbers.length > 6) return;
-  //   let newNumber = getLottoNumber();
-  //   const newNumbers = [...numbers];
-  //   newNumbers.push(newNumber);
-  //   setNumbers(newNumbers);
-  // };
 
   const getLottoNumber = (arr: Number[]) => {
-    // if (numbers.length > 6) return;
     let isDuplicated = true;
     let newNumber = 0;
     while (isDuplicated) {
@@ -69,18 +61,44 @@ function App() {
 
   const clickForDelete = () => {
     setSelectedNumber([]);
+    setPopText('한번에 다뽑기');
   };
 
-  const getLottoNumbers = () => {
-    const numArr = [];
-    for (let i = 0; i < 7; i++) {
-      numArr.push(getLottoNumber(numArr))
+  // const getLottoNumbers = () => {
+  //   const numArr = [];
+  //   for (let i = 0; i < 7; i++) {
+  //     numArr.push(getLottoNumber(numArr))
+  //   }
+  //   numArr.sort((a, b) => a - b)
+  //   setSelectedNumber([numArr]);
+  //   setPopText('다시 뽑기')
+
+  //   if (popText === '다시 뽑기') {
+  //     const arr = [...pastNumbers];
+  //     arr.push(numArr)
+  //     setPastNumbers(arr);
+  //     console.log(arr, pastNumbers)
+  //   }
+
+  // }
+
+
+  const getLottoNumbersFiveTimes = () => {
+    const numSet = [];
+    for (let j = 0; j < 5; j++) {
+      let numArr = [];
+      for (let i = 0; i < 7; i++) {
+        numArr.push(getLottoNumber(numArr))
+      }
+      numArr.sort((a, b) => a - b)
+      numSet.push(numArr);
     }
-    numArr.sort((a, b) => a - b)
-    setSelectedNumber(numArr);
+
+    setSelectedNumber(numSet);
     setPopText('다시 뽑기')
 
   }
+
 
 
   return (
@@ -89,19 +107,25 @@ function App() {
         <h1>오대장</h1>
         <h1> 1등 뽑아 제발</h1>
       </div>
-      <BallContainer>
-        <NumberBall className={selectedNumbers[0]}>{selectedNumbers[0]}</NumberBall>
-        <NumberBall className={selectedNumbers[1]}>{selectedNumbers[1]}</NumberBall>
-        <NumberBall className={selectedNumbers[2]}>{selectedNumbers[2]}</NumberBall>
-        <NumberBall className={selectedNumbers[3]}>{selectedNumbers[3]}</NumberBall>
-        <NumberBall className={selectedNumbers[4]}>{selectedNumbers[4]}</NumberBall>
-        <NumberBall className={selectedNumbers[5]}>{selectedNumbers[5]}</NumberBall>
-        <PlusText> + </PlusText>
-        <NumberBall className={selectedNumbers[6]}>{selectedNumbers[6]}</NumberBall>
-      </BallContainer>
+      <Wrapper>
+        {
+          selectedNumbers.map((numbers, index) => {
+            return <BallContainer key={index}>
+              {numbers.map((number, _index) => {
+                if (index < 6) return <NumberBall key={index + '_' + _index} className={number}>{number}</NumberBall>
+                else return <>
+                  <PlusText key={'plus_' + index}> + </PlusText>
+                  <NumberBall key={index + '_' + _index} className={number}>{number}</NumberBall>
+                </>
+              })}
+            </BallContainer>
+          })
+        }
+      </Wrapper>
       <div className="card">
         {/* <button onClick={clickForGettingNumber}>하나씩 뽑기</button> */}
-        <button onClick={getLottoNumbers}>{popText}</button>
+        {/* <button onClick={getLottoNumbers}>{popText}</button> */}
+        <button onClick={getLottoNumbersFiveTimes}>5개씩 뽑기</button>
         <button onClick={clickForDelete}>지우기</button>
       </div>
     </>
@@ -112,6 +136,8 @@ export default App;
 const BallContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 20px;
+  background: lavender;
 `;
 
 const NumberBall = styled.div`
@@ -132,3 +158,9 @@ const PlusText = styled.span`
   display: flex;
   align-items: center;
 `;
+
+const Wrapper = styled.div`
+  display: flex;
+  gap:20px;
+  flex-direction: column;
+`

@@ -8,7 +8,7 @@ import { data, colorSet } from "./data";
 function App() {
   const [total, setTotal] = useState(0);
   const [calArray, setCalArray] = useState([]);
-  const [popText, setPopText] = useState('한번에 다뽑기');
+  // const [popText, setPopText] = useState('한번에 다뽑기');
 
   const [selectedNumbers, setSelectedNumber] = useRecoilState(store.numbers);
 
@@ -61,7 +61,7 @@ function App() {
 
   const clickForDelete = () => {
     setSelectedNumber([]);
-    setPopText('한번에 다뽑기');
+    // setPopText('한번에 다뽑기');
   };
 
   // const getLottoNumbers = () => {
@@ -95,7 +95,7 @@ function App() {
     }
 
     setSelectedNumber(numSet);
-    setPopText('다시 뽑기')
+    // setPopText('다시 뽑기')
 
   }
 
